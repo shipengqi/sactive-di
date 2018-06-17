@@ -1,4 +1,7 @@
-const di = require('../lib');
+const Di = require('../lib');
+const utils = require('../lib/utils');
+const InstanceWrapper = require('../lib/instance_wrapper');
+const constants = require('../lib/constants');
 const {expect} = require('chai');
 
 const CONSTANTS_MOCK = {
@@ -60,7 +63,7 @@ let instance1 = {
 describe('Dependency injector tests', function() {
   describe('Sactive tests', function() {
     before(function() {
-      this.$$injector = new di.Sactive();
+      this.$$injector = new Di();
       this.$$injector.bindInstance('instance1', instance1);
       this.$$injector.bindClass('util', Util);
       this.$$injector.bindClass('router', Router);
@@ -119,26 +122,26 @@ describe('Dependency injector tests', function() {
   });
   describe('Utils tests', function() {
     it('Get argument names from class with constructor test', function() {
-      expect(di.utils.getArgumentNames(Router)).to.eql(['$$logger']);
+      expect(utils.getArgumentNames(Router)).to.eql(['$$logger']);
     });
     it('Get argument names from class without constructor test', function() {
-      expect(di.utils.getArgumentNames(Logger)).to.eql([]);
+      expect(utils.getArgumentNames(Logger)).to.eql([]);
     });
     it('Get argument names from function test', function() {
-      expect(di.utils.getArgumentNames(test)).to.eql(['$$logger']);
+      expect(utils.getArgumentNames(test)).to.eql(['$$logger']);
     });
     it('Get argument names from async function test', function() {
-      expect(di.utils.getArgumentNames(asyncFunc)).to.eql(['$$logger']);
+      expect(utils.getArgumentNames(asyncFunc)).to.eql(['$$logger']);
     });
     it('Get argument names from arrow function test', function() {
-      expect(di.utils.getArgumentNames(arrowFunc)).to.eql(['$$logger']);
+      expect(utils.getArgumentNames(arrowFunc)).to.eql(['$$logger']);
     });
   });
   describe('IntanceWrapper tests', function() {
     before(function() {
-      this.instance1 = new di.pravite.InstanceWrapper(instance1);
-      this.instance2 = new di.pravite.InstanceWrapper(test, {type: CONSTANTS_MOCK.INSTANCE_BIND_TYPE.FUNCTION});
-      this.instance3 = new di.pravite.InstanceWrapper(Router, {type: CONSTANTS_MOCK.INSTANCE_BIND_TYPE.CLASS});
+      this.instance1 = new InstanceWrapper(instance1);
+      this.instance2 = new InstanceWrapper(test, {type: CONSTANTS_MOCK.INSTANCE_BIND_TYPE.FUNCTION});
+      this.instance3 = new InstanceWrapper(Router, {type: CONSTANTS_MOCK.INSTANCE_BIND_TYPE.CLASS});
     });
     after(function() {
       this.instance1 = null;
@@ -177,15 +180,15 @@ describe('Dependency injector tests', function() {
   });
   describe('Contants tests', function() {
     it('INSTANCE_BIND_TYPE test', function() {
-      expect(di.pravite.constants.INSTANCE_BIND_TYPE).to.eql(
+      expect(constants.INSTANCE_BIND_TYPE).to.eql(
         CONSTANTS_MOCK.INSTANCE_BIND_TYPE
       );
     });
     it('Other constants test', function() {
-      expect(di.pravite.constants.INSTANCE_NAME_PREFIX).to.eql(
+      expect(constants.INSTANCE_NAME_PREFIX).to.eql(
         CONSTANTS_MOCK.INSTANCE_NAME_PREFIX
       );
-      expect(di.pravite.constants.INSTANCE_INJECTOR_NAME).to.eql(
+      expect(constants.INSTANCE_INJECTOR_NAME).to.eql(
         CONSTANTS_MOCK.INSTANCE_INJECTOR_NAME
       );
     });
@@ -193,7 +196,7 @@ describe('Dependency injector tests', function() {
   describe('Init tests', function() {
     it('Should throw an error: Instance name must be a string.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.bindInstance(null, 'test');
       } catch (e) {
         expect(e.message).to.eql('Instance name must be a string.');
@@ -201,7 +204,7 @@ describe('Dependency injector tests', function() {
     });
     it('Should throw an error: Instance cannot be null.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.bindInstance('emptyintance', null);
       } catch (e) {
         expect(e.message).to.eql('Instance cannot be null.');
@@ -209,7 +212,7 @@ describe('Dependency injector tests', function() {
     });
     it('Should throw an error: router has been bound.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.bindInstance('router', 'test');
       } catch (e) {
         expect(e.message).to.eql('Instance name: router has been bound.');
@@ -217,7 +220,7 @@ describe('Dependency injector tests', function() {
     });
     it('Should throw an error: Instance names must be an array.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.getInstances({});
       } catch (e) {
         expect(e.message).to.eql('Instance names must be an array.');
@@ -225,7 +228,7 @@ describe('Dependency injector tests', function() {
     });
     it('Should throw an error: delete Instance name must be a string.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.deleteInstance({});
       } catch (e) {
         expect(e.message).to.eql('Instance name must be a string.');
@@ -233,7 +236,7 @@ describe('Dependency injector tests', function() {
     });
     it('Should throw an error: delete Instance names must be an array.', function() {
       try {
-        let injector = new di.Sactive();
+        let injector = new Di();
         injector.deleteInstances({});
       } catch (e) {
         expect(e.message).to.eql('Instance names must be an array.');
