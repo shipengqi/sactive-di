@@ -1,0 +1,9 @@
+/docs/
+/node_modules/
+/test/
+/log/
+.idea
+*.env
+*.log
+package-lock.json
+*.lock
