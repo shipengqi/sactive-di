@@ -16,7 +16,7 @@ npm install sactive-di
 
 ## Usage
 
-**`sactive-di`目前只支持类的依赖注入。**
+**`sactive-di`只有已经绑定的实例才可以注入，参数前缀必须是`$$`，否则会注入`null`。**
 
 ```javascript
 class Class1 {
@@ -39,8 +39,12 @@ async function asyncFunc() {
   return 'test';
 }
 
+async function asyncFunc2($$Class1) {
+  return $$Class1.test();
+}
+
 class Class3 {
-  constructor($$class1, $$class2, $$async) {
+  constructor($$class1, $$class2, $$async, $$async2) {
     this.$$class1 = $$class1;
     this.$$class2 = $$class2;
     this.$$async = $$async;
@@ -53,6 +57,7 @@ di.bindClass('class1', class1);
 di.bindClass('class1', Class2);
 di.bindClass('Class3', Class3);
 di.bindFunction('async', asyncFunc);
+di.bindFunction('async2', asyncFunc2);
 let class3 = app.getInstance('$$class3');
 class3.$$class2.test() // => 'test'
 class3.$$class2.$$class1.test() // => 'test'
@@ -60,9 +65,12 @@ class3.$$class1.test() // => 'test'
 class3.$$async.then(function(res) {
     console.log(res) // => 'test'
 });
+class3.$$async2.then(function(res) {
+    console.log(res) // => 'test'
+});
 ```
 
-上面的例子，`Class3` 注入了三个依赖 `$$class1`，`$$class2`，`$$async`，`Class2` 注入了依赖 `$$class1`。
+上面的例子，`Class3` 注入了四个依赖 `$$class1`、`$$class2`、`$$async`、`$$async2`，`Class2` 注入了依赖 `$$class1`。
 
 ## API
 ### bindClass

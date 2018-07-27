@@ -52,6 +52,18 @@ const arrowFunc = $$logger => {
   return 'test';
 };
 
+async function asyncFunc2($$logger) {
+  return $$logger;
+}
+
+function test2($$logger) {
+  return $$logger;
+}
+
+const arrowFunc2 = $$logger => {
+  return $$logger;
+};
+
 let instance1 = {
   name: 'xiaoming',
   age: 18,
@@ -71,6 +83,9 @@ describe('Dependency injector tests', function() {
       this.$$injector.bindFunction('test', test);
       this.$$injector.bindFunction('async', asyncFunc);
       this.$$injector.bindFunction('arrow', arrowFunc);
+      this.$$injector.bindFunction('test2', test2);
+      this.$$injector.bindFunction('async2', asyncFunc2);
+      this.$$injector.bindFunction('arrow2', arrowFunc2);
       this.$$injector.bindInstance('instanced', instance1);
       this.$$injector.bindInstance('instanced2', instance1);
     });
@@ -91,6 +106,18 @@ describe('Dependency injector tests', function() {
     });
     it('Inject arrow function test', function() {
       expect(this.$$injector.getInstance('$$arrow')).to.eql('test');
+    });
+    it('Inject function test2', function() {
+      expect(this.$$injector.getInstance('$$test2').test()).to.eql('test');
+    });
+    it('Inject async function test2', function(done) {
+      this.$$injector.getInstance('$$async2').then(function(res) {
+        expect(res.test()).to.eql('test');
+        done();
+      });
+    });
+    it('Inject arrow function test2', function() {
+      expect(this.$$injector.getInstance('$$arrow2').test()).to.eql('test');
     });
     it('Inject class test', function(done) {
       let util = this.$$injector.getInstance('$$util');
