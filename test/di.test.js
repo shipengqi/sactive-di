@@ -60,6 +60,14 @@ function test2($$logger) {
   return $$logger;
 }
 
+function test3($$logger, $$notfound, without$$) {
+  return {
+    $$logger,
+    $$notfound,
+    without$$
+  };
+}
+
 const arrowFunc2 = $$logger => {
   return $$logger;
 };
@@ -86,6 +94,7 @@ describe('Dependency injector tests', function() {
       this.$$injector.bindFunction('test2', test2);
       this.$$injector.bindFunction('async2', asyncFunc2);
       this.$$injector.bindFunction('arrow2', arrowFunc2);
+      this.$$injector.bindFunction('test3', test3);
       this.$$injector.bindInstance('instanced', instance1);
       this.$$injector.bindInstance('instanced2', instance1);
     });
@@ -109,6 +118,11 @@ describe('Dependency injector tests', function() {
     });
     it('Inject function test2', function() {
       expect(this.$$injector.getInstance('$$test2').test()).to.eql('test');
+    });
+    it('Inject function test3 with dependencies which is not found', function() {
+      expect(this.$$injector.getInstance('$$test3').$$logger.test()).to.eql('test');
+      expect(this.$$injector.getInstance('$$test3').$$notfound).to.eql(null);
+      expect(this.$$injector.getInstance('$$test3').without$$).to.eql(null);
     });
     it('Inject async function test2', function(done) {
       this.$$injector.getInstance('$$async2').then(function(res) {
