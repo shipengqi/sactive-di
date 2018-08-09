@@ -239,9 +239,9 @@ npm run test:cov
 
 [npm-image]: https://img.shields.io/npm/v/sactive-di.svg
 [npm-url]: https://www.npmjs.com/package/sactive-di
-[travis-image]: https://travis-ci.org/sactive/sactive-di.svg?branch=master
-[travis-url]: https://www.travis-ci.org/sactive/sactive-di
-[cov-image]: https://codecov.io/gh/sactive/sactive-di/branch/master/graph/badge.svg
-[cov-url]: https://codecov.io/gh/sactive/sactive-di
+[travis-image]: https://travis-ci.org/shipengqi/sactive-di.svg?branch=master
+[travis-url]: https://www.travis-ci.org/shipengqi/sactive-di
+[cov-image]: https://codecov.io/gh/shipengqi/sactive-di/branch/master/graph/badge.svg
+[cov-url]: https://codecov.io/gh/shipengqi/sactive-di
 [license-image]: http://img.shields.io/npm/l/sactive-di.svg
 [license-url]: ./LICENSE
