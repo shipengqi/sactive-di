@@ -5,6 +5,7 @@ Dependency injector for Node.js.
 [![Build status][travis-image]][travis-url]
 [![Coverage][cov-image]][cov-url]
 [![NPM version][npm-image]][npm-url]
+[![NPM Download][npm-download]][npm-url]
 [![License][license-image]][license-url]
 
 [![NPM](https://nodei.co/npm/sactive-di.png?downloads=true)](https://nodei.co/npm/sactive-di/)
@@ -243,5 +244,6 @@ npm run test:cov
 [travis-url]: https://www.travis-ci.org/shipengqi/sactive-di
 [cov-image]: https://codecov.io/gh/shipengqi/sactive-di/branch/master/graph/badge.svg
 [cov-url]: https://codecov.io/gh/shipengqi/sactive-di
+[npm-download]: https://img.shields.io/npm/dw/sactive-di.svg
 [license-image]: http://img.shields.io/npm/l/sactive-di.svg
 [license-url]: ./LICENSE
