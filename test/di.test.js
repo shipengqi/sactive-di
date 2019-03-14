@@ -40,6 +40,25 @@ class Util {
   }
 }
 
+class Father {
+  constructor() {
+    this.sayHi();
+  }
+
+  sayHi() {
+    return 'father';
+  }
+}
+
+class Son extends Father{
+  constructor() {
+    super();
+  }
+  sayHi() {
+    return 'son';
+  }
+}
+
 async function asyncFunc($$logger) {
   return 'test';
 }
@@ -88,6 +107,7 @@ describe('Dependency injector tests', function() {
       this.$$injector.bindClass('util', Util);
       this.$$injector.bindClass('router', Router);
       this.$$injector.bindClass('logger', Logger);
+      this.$$injector.bindClass('son', Son);
       this.$$injector.bindFunction('test', test);
       this.$$injector.bindFunction('async', asyncFunc);
       this.$$injector.bindFunction('arrow', arrowFunc);
@@ -142,6 +162,9 @@ describe('Dependency injector tests', function() {
         expect(res).to.eql('test');
         done();
       });
+    });
+    it('Inject extends test', function() {
+      expect(this.$$injector.getInstance('$$son').sayHi()).to.eql('son');
     });
     it('Get instances test', function(done) {
       let res = this.$$injector.getInstances(['$$async', '$$test']);
