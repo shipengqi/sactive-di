@@ -59,7 +59,7 @@ di.bindClass('class1', Class2);
 di.bindClass('Class3', Class3);
 di.bindFunction('async', asyncFunc);
 di.bindFunction('async2', asyncFunc2);
-let class3 = app.getInstance('$$class3');
+let class3 = di.getInstance('$$class3');
 class3.$$class2.test() // => 'test'
 class3.$$class2.$$class1.test() // => 'test'
 class3.$$class1.test() // => 'test'
